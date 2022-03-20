@@ -11,6 +11,7 @@
 # **************************************************************************** #
 
 NAME = pipex
+CC = gcc
 CFLAGS = -Wall -Wextra -Werror
 
 FILES = main.c pipex.c ft_split.c ft_get_cmd_path.c
@@ -20,7 +21,7 @@ OBJ = $(FILES:.c=.o)
 all: $(NAME)
 
 $(NAME): $(OBJ)
-	gcc $(CFLAGS) -o $(NAME) $(FILES)
+	$(CC) $(CFLAGS) -o $(NAME) $(FILES)
 
 clean:
 	rm -rf $(OBJ)
