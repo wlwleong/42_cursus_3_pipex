@@ -10,15 +10,11 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unistd.h>
-#include <fcntl.h>
-#include <stdlib.h>
-#include <stdio.h>
-#include <sys/wait.h>
+#include "pipex.h"
 
-static void	child(int pipe_fds[], char *cmd);
+static void	child(int pipe_fds[], char *cmd, char **envp);
 
-char	*ft_get_cmd_path(char *cmd)
+char	*ft_get_cmd_path(char *cmd, char **envp)
 {
 	int		pipe_fds[2];
 	int		status;
@@ -32,7 +28,7 @@ char	*ft_get_cmd_path(char *cmd)
 	if (parent < 0)
 		perror("ft_get_cmd_path Fork: ");
 	if (parent == 0)
-		child(pipe_fds, cmd);
+		child(pipe_fds, cmd, envp);
 	else
 	{
 		waitpid(parent, &status, 0);
@@ -45,15 +41,15 @@ char	*ft_get_cmd_path(char *cmd)
 	return (ret_str);
 }
 
-static void	child(int pipe_fds[], char *cmd)
+static void	child(int pipe_fds[], char *cmd, char **envp)
 {
 	char	*cmd_args[3];
 
 	cmd_args[0] = "which";
 	cmd_args[1] = cmd;
-	cmd_args[2] = NULL;
+	cmd_args[2] = (char *) 0;
 	if (dup2(pipe_fds[1], STDOUT_FILENO) < 0)
-		perror("ft_get_cmd_path Child Dup2: ");
+		return (perror("ft_get_cmd_path Child Dup2: "));
 	close(pipe_fds[0]);
-	execve ("/usr/bin/which", cmd_args, NULL);
+	execve ("/usr/bin/which", cmd_args, envp);
 }

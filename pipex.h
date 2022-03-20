@@ -20,7 +20,7 @@
 # include <sys/wait.h>
 
 char	**ft_split(char const *s, char c);
-char	*ft_get_cmd_path(char *cmd);
-void	pipex(int file1_fd, char *cmd1, char *cmd2, int file2_fd);
+char	*ft_get_cmd_path(char *cmd, char **envp);
+void	pipex(int file1_fd, char *cmd[], int file2_fd, char **envp);
 
 #endif

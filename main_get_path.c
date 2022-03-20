@@ -12,15 +12,15 @@
 
 #include <stdio.h>
 
-char	*ft_get_cmd_path(char *cmd);
+char	*ft_get_cmd_path(char *cmd, char **envp);
 
-int	main(int argc, char **argv)
+int	main(int argc, char **argv, char **envp)
 {
 	if (argc < 2)
 	{
 		printf("Invalid input!\n");
 		return (-1);
 	}
-	printf("output at main : %s\n", ft_get_cmd_path(argv[1]));
+	printf("output at main : %s\n", ft_get_cmd_path(argv[1], envp));
 	return (0);
 }

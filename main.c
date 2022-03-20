@@ -12,7 +12,7 @@
 
 #include "pipex.h"
 
-int	main(int argc, char **argv)
+int	main(int argc, char **argv, char **envp)
 {
 	int	fd1;
 	int	fd2;
@@ -23,9 +23,9 @@ int	main(int argc, char **argv)
 		return (-1);
 	}
 	fd1 = open(argv[1], O_RDONLY);
-	fd2 = open(argv[4], O_WRONLY | O_CREAT, 0666);
+	fd2 = open(argv[4], O_RDWR | O_CREAT, 0666);
 	if (fd1 < 0 || fd2 < 0)
 		return (-1);
-	pipex(fd1, argv[2], argv[3], fd2);
+	pipex(fd1, argv, fd2, envp);
 	return (0);
 }
