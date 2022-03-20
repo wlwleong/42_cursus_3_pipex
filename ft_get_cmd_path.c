@@ -26,16 +26,16 @@ char	*ft_get_cmd_path(char *cmd)
 	int		n_read;
 	char	*ret_str;
 
+	ret_str = (char *) malloc (sizeof(*ret_str) * 100);
 	pipe(pipe_fds);
 	parent = fork();
 	if (parent < 0)
 		perror("ft_get_cmd_path Fork: ");
-	if (!parent)
+	if (parent == 0)
 		child(pipe_fds, cmd);
 	else
 	{
 		waitpid(parent, &status, 0);
-		ret_str = (char *) malloc (sizeof(*ret_str) * 100);
 		n_read = read(pipe_fds[0], ret_str, 100);
 		if (n_read <= 0)
 			perror("ft_get_cmd_path Parent Read: ");
