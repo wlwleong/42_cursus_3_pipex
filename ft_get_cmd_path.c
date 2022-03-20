@@ -47,9 +47,10 @@ static void	child(int pipe_fds[], char *cmd, char **envp)
 
 	cmd_args[0] = "which";
 	cmd_args[1] = cmd;
-	cmd_args[2] = (char *) 0;
+	cmd_args[2] = NULL;
 	if (dup2(pipe_fds[1], STDOUT_FILENO) < 0)
 		return (perror("ft_get_cmd_path Child Dup2: "));
 	close(pipe_fds[0]);
 	execve ("/usr/bin/which", cmd_args, envp);
+	return (perror("ft_get_cmd_path Child execve: "));
 }
