@@ -22,26 +22,17 @@ void	pipex(int file1_fd, char *cmd[], int file2_fd, char **envp)
 	pid_t	child1;
 	pid_t	child2;
 
-	printf("Entering pipex...\n");
 	pipe(pipe_fds);
 	child1 = fork();
 	if (child1 < 0)
 		return (perror("child1 Fork: "));
 	if (child1 == 0)
-	{
-		printf("Executing Child1...\n");
 		child_one(pipe_fds, file1_fd, ft_split(cmd[2], ' '), envp);
-		printf("Child1 done!\n");
-	}
 	child2 = fork();
 	if (child2 < 0)
 		return (perror("child2 Fork: "));
 	if (child2 == 0)
-	{
-		printf("Executing Child2...\n");
 		child_two(pipe_fds, file2_fd, ft_split(cmd[3], ' '), envp);
-		printf("Child2 done!\n");
-	}
 	close(pipe_fds[0]);
 	close(pipe_fds[1]);
 	waitpid(child1, &status, 0);
