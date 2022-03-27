@@ -19,8 +19,7 @@
 # include <fcntl.h>
 # include <sys/wait.h>
 # include <errno.h>
-
-char	**ft_split(char const *s, char c);
+# define N_COMMAND argc - 3
 
 typedef struct  s_struct
 {
@@ -28,5 +27,11 @@ typedef struct  s_struct
     char    **arg;
     char    **envp;
 }               t_cmd;
+
+char	**ft_split(char const *s, char c);
+void	ft_get_cmd_path(t_cmd *commands);
+void	ft_fill_cmd(t_cmd *commands, int argc, char *argv[], char **envp);
+int     ft_get_infile(char *file_path);
+int	    ft_get_outfile(char *file_path);
 
 #endif

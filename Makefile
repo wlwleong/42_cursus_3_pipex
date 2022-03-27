@@ -12,9 +12,9 @@
 
 NAME = pipex
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror -ggdb3
 
-FILES = main.c pipex.c ft_split.c ft_get_cmd_path.c
+FILES = main.c ft_split.c ft_get_cmd_path.c ft_fill_cmd.c ft_get_infile.c ft_get_outfile.c
 
 OBJ = $(FILES:.c=.o)
 
