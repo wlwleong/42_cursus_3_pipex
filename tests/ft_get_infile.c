@@ -10,20 +10,22 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <unistd.h>
 #include <stdlib.h>
 #include <stdio.h>
 #include <errno.h>
 #include <fcntl.h>
 
-/* O_TRUNC if the file already exists,
-		it will be truncated to length 0.
-0644 user have read and write permission,
-		group and others has read permission */
-int	ft_check_outfile(char *file_path)
+int	ft_get_infile(char *file_path)
 {
 	int	fd;
 
-	fd = open(file_path, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+	if (access(file_path, F_OK) != 0)
+	{
+		perror(file_path);
+		exit(errno);
+	}
+	fd = open(file_path, O_RDONLY);
 	if (fd < 0)
 	{
 		perror(file_path);

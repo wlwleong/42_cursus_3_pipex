@@ -13,7 +13,6 @@
 #include "../pipex.h"
 
 void    ft_get_cmd_path(t_cmd *cmd_struct);
-void    ft_check_cmd(t_cmd *cmd_struct, int argc);
 void    print_commands(t_cmd *cmd_struct[], int argc);
 
 int main(int argc, char *argv[], char **envp)

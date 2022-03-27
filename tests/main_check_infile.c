@@ -12,7 +12,7 @@
 
 #include <stdio.h>
 
-int	ft_check_infile(char *file_path);
+int	ft_get_infile(char *file_path);
 
 int	main(int argc, char *argv[])
 {
@@ -26,7 +26,7 @@ int	main(int argc, char *argv[])
 	i = 1;
 	while (argc - i > 0)
 	{
-		if (ft_check_infile(argv[i]))
+		if (ft_get_infile(argv[i]))
 			printf("%s: file checked OK!\n", argv[i]);
 		i++;
 	}

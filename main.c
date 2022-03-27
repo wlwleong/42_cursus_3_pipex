@@ -12,28 +12,61 @@
 
 #include "pipex.h"
 
+void	ft_create_pipe(int *pipes[2], int n)
+{
+	int	i;
+
+	i = 0;
+	while (i < n)
+	{
+		if (pipe(pipes[i]) < 0)
+		{
+			perror("error creating pipes!\n");
+			exit(errno);
+		}
+		i++;
+	}
+}
+
+void	ft_dup2(int oldfd, int newfd)
+{
+	if (dup2(oldfd, newfd) < 0)
+	{
+		perror("error duplicating fd!\n");
+		exit(errno);
+	}
+}
+
+void    print_commands(t_cmd *cmd_struct)
+{
+    int j;
+
+    printf("command path = %s\n", cmd_struct->path);
+    j = 0;
+    printf("command args = ");
+    while(cmd_struct->arg[j])
+        printf("%s,", cmd_struct->arg[j++]);
+    printf("\n");
+}
+
+void	pipex(int index, int argc)
+{
+	if (index == 0)
+		ft_dup2(ft_check_infile(argv[1]), )
+}
+
 int	main(int argc, char **argv, char **envp)
 {
-	int	fd1;
-	int	fd2;
+	int		pipe_fd[(argc - 3) - 1][2];
+	pid_t	child[argc - 3];
+	t_cmd	*cmds;
+	int	i;
 
-	if (argc < 5)
-	{
-		printf("Invalid input!\n");
-		return (-1);
-	}
-	fd1 = open(argv[1], O_RDONLY);
-	fd2 = open(argv[4], O_RDWR | O_CREAT | O_TRUNC, 0644);
-	if (fd1 < 0)
-	{
-		perror(argv[1]);
-		exit(1);
-	}
-	if (fd2 < 0)
-	{
-		perror(argv[4]);
-		exit(1);
-	}
-	pipex(fd1, argv, fd2, envp);
+	ft_create_pipe(pipe_fd, (argc - 3) - 1);
+	cmds = malloc ((argc - 3) * sizeof(t_cmd));
+	ft_fill_cmd(&cmds, argc, argv, envp);
+	i = 0;
+	while (i < argc - 3)
+		print_commands(cmds[i++]);
 	return (0);
 }

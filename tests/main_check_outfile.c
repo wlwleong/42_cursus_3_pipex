@@ -12,7 +12,7 @@
 
 #include <stdio.h>
 
-int	ft_check_outfile(char *file_path);
+int	ft_get_outfile(char *file_path);
 
 int	main(int argc, char *argv[])
 {
@@ -21,7 +21,7 @@ int	main(int argc, char *argv[])
 		printf("Invalid arguments!\n");
 		return (-1);
 	}
-	if (ft_check_outfile(argv[1]))
+	if (ft_get_outfile(argv[1]))
 		printf("%s: file checked OK!\n", argv[1]);
 	return (0);
 }
