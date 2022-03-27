@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../pipex.h"
+#include "pipex.h"
 
 static void	child(int *fd, char *cmd, char **envp);
 static void	parent(int *fd, char *path);

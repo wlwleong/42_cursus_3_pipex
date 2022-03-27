@@ -12,22 +12,6 @@
 
 #include "pipex.h"
 
-void	ft_create_pipe(int *pipes[2], int n)
-{
-	int	i;
-
-	i = 0;
-	while (i < n)
-	{
-		if (pipe(pipes[i]) < 0)
-		{
-			perror("error creating pipes!\n");
-			exit(errno);
-		}
-		i++;
-	}
-}
-
 void	ft_dup2(int oldfd, int newfd)
 {
 	if (dup2(oldfd, newfd) < 0)
@@ -49,24 +33,29 @@ void    print_commands(t_cmd *cmd_struct)
     printf("\n");
 }
 
-void	pipex(int index, int argc)
-{
-	if (index == 0)
-		ft_dup2(ft_check_infile(argv[1]), )
-}
+void    ft_fill_cmd(t_cmd *commands, int argc, char *argv[], char **envp);
 
 int	main(int argc, char **argv, char **envp)
 {
-	int		pipe_fd[(argc - 3) - 1][2];
-	pid_t	child[argc - 3];
+	int		pipe_fd[argc - 3 - 1][2];
+//	pid_t	child[argc - 3];
 	t_cmd	*cmds;
 	int	i;
 
-	ft_create_pipe(pipe_fd, (argc - 3) - 1);
-	cmds = malloc ((argc - 3) * sizeof(t_cmd));
-	ft_fill_cmd(&cmds, argc, argv, envp);
 	i = 0;
 	while (i < argc - 3)
-		print_commands(cmds[i++]);
+	{
+		if (pipe(pipe_fd[i]) < 0)
+		{
+			perror("error creating pipes!\n");
+			exit(errno);
+		}
+		i++;
+	}
+	cmds = malloc ((argc - 3) * sizeof(t_cmd));
+	ft_fill_cmd(cmds, argc, argv, envp);
+	i = 0;
+	while (i < argc - 3)
+		print_commands(&cmds[i++]);
 	return (0);
 }
