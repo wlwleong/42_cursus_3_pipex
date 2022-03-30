@@ -51,8 +51,9 @@ static void	child(int infile_fd, int *pipe_fd, t_cmd *commands, int argc)
 	close(pipe_fd[READ_END]);
 	if (execve(commands[0].path, commands[0].arg, commands[0].envp) < 0)
 	{
+		perror(commands[0].arg[0]);
 		ft_free_command(commands, argc);
-		error("error executing cmd (Child)");
+		exit(errno);
 	}
 }
 
@@ -65,7 +66,8 @@ static void	parent(int outfile_fd, int *pipe_fd, t_cmd *commands, int argc)
 	close(pipe_fd[WRITE_END]);
 	if (execve(commands[1].path, commands[1].arg, commands[1].envp) < 0)
 	{
+		perror(commands[1].arg[0]);
 		ft_free_command(commands, argc);
-		error("error executing cmd (Parent)");
+		exit(errno);
 	}
 }
