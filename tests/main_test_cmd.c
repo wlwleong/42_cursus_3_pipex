@@ -12,18 +12,30 @@
 
 #include "../pipex.h"
 
+void	print_arg(char *args[])
+{
+	int	i;
+
+	i = 0;
+	while (args[i])
+	{
+		printf("%p, ", args[i]);
+		fflush(stdout);
+		i++;
+	}
+	printf("%p\n", args[i]);
+}
+
 int	main(int argc, char *argv[], char **envp)
 {
-	int	child_status;
 	int	pipe_fd[2];
 	int	file_fd[2];
 	pid_t	child;
-	char	*cmd1[] = { "cat" };
+	char	*cmd1[] = { "cat", NULL };
 	char	*cmd2[] = { "hostname", NULL };
 
 	if (argc < 0 || argv == NULL)
 		return (-1);
-	child_status = 0;
 	if (pipe(pipe_fd) < 0)
 	{
 		perror("error creating pipes");
@@ -44,6 +56,7 @@ int	main(int argc, char *argv[], char **envp)
 			perror("error redirecting I of I/O (Child)");
 			exit(errno);
 		}
+		print_arg(cmd1);
 		if (dup2(pipe_fd[1], STDOUT_FILENO) < 0)
 		{
 			perror("error redirecting O of I/O (Child)");
@@ -52,7 +65,6 @@ int	main(int argc, char *argv[], char **envp)
 		close(pipe_fd[0]);
 		if (execve("/usr/bin/cat", cmd1, envp) < 0)
 		{
-			child_status = -1;
 			perror("error executing cmd1");
 			exit(errno);
 		}
@@ -60,19 +72,18 @@ int	main(int argc, char *argv[], char **envp)
 	else
 	{
 		waitpid(child, NULL, 0);
-		printf("Child status = %d\n", child_status);	
 		if (dup2(pipe_fd[0], STDIN_FILENO) < 0)
 		{
 			perror("error redirecting I of I/O (Parent)");
 			exit(errno);
 		}
+		print_arg(cmd2);
 		if (dup2(file_fd[1], STDOUT_FILENO) < 0)
 		{
 			perror("error redirecting O of I/O (Parent)");
 			exit(errno);
 		}
 		close(pipe_fd[1]);
-		printf("Child status = %d\n", child_status);
 		if (execve("/usr/bin/hostname", cmd2, envp) < 0)
 		{
 			perror("error executing cmd2");
