@@ -19,7 +19,6 @@
 # include <fcntl.h>
 # include <sys/wait.h>
 # include <errno.h>
-# define N_COMMAND argc - 3
 
 typedef struct  s_struct
 {
