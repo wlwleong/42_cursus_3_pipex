@@ -10,22 +10,18 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include "../includes/pipex.h"
 
-int	ft_get_infile(char *file_path)
+/* O_TRUNC if the file already exists,
+		it will be truncated to length 0.
+0644 user have read and write permission,
+		group and others has read permission */
+int	ft_get_outfile(char *file_path)
 {
 	int	fd;
 
-	if (access(file_path, F_OK) != 0)
-	{
-		perror(file_path);
-		exit(errno);
-	}
-	fd = open(file_path, O_RDONLY);
+	fd = open(file_path, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	if (fd < 0)
-	{
-		perror(file_path);
-		exit(errno);
-	}
+		error(file_path);
 	return (fd);
 }

@@ -19,6 +19,10 @@
 # include <fcntl.h>
 # include <sys/wait.h>
 # include <errno.h>
+# define READ_END 0
+# define WRITE_END 1
+# define INFILE 0
+# define OUTFILE 1
 
 typedef struct  s_struct
 {
@@ -28,9 +32,11 @@ typedef struct  s_struct
 }               t_cmd;
 
 char	**ft_split(char const *s, char c);
-void	ft_get_cmd_path(t_cmd *commands);
-void	ft_fill_cmd(t_cmd *commands, int argc, char *argv[], char **envp);
 int     ft_get_infile(char *file_path);
 int	    ft_get_outfile(char *file_path);
+void	ft_get_cmd_path(t_cmd *commands);
+void	ft_fill_cmd(t_cmd *commands, int argc, char *argv[], char **envp);
+void	ft_free_command(t_cmd *commands, int argc);
+void    error(char *error_string);
 
 #endif

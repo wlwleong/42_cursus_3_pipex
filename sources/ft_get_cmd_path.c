@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include "../includes/pipex.h"
 
 static void	child(int *fd, char *cmd, char **envp);
 static void	parent(int *fd, char *path);
@@ -22,16 +22,10 @@ void	ft_get_cmd_path(t_cmd *commands)
 	pid_t	child_pid;
 
 	if (pipe(pipe_fd) < 0)
-	{
-		perror("pipe @ ft_get_cmd_path");
-		exit(errno);
-	}
+		error("pipe @ ft_get_cmd_path");
 	child_pid = fork();
 	if (child_pid < 0)
-	{
-		perror("child @ ft_get_cmd_path");
-		exit(errno);
-	}
+		error("child @ ft_get_cmd_path");
 	if (child_pid == 0)
 		child(pipe_fd, commands->arg[0], commands->envp);
 	else
@@ -39,8 +33,8 @@ void	ft_get_cmd_path(t_cmd *commands)
 		waitpid(child_pid, &status, 0);
 		parent(pipe_fd, commands->path);
 	}
-	close(pipe_fd[0]);
-	close(pipe_fd[1]);
+	close(pipe_fd[READ_END]);
+	close(pipe_fd[WRITE_END]);
 }
 
 static void	child(int *fd, char *cmd, char **envp)
@@ -50,32 +44,21 @@ static void	child(int *fd, char *cmd, char **envp)
 	cmd_args[0] = "which";
 	cmd_args[1] = cmd;
 	cmd_args[2] = NULL;
-	close(fd[0]);
-	if (dup2(fd[1], STDOUT_FILENO) < 0)
-	{
-		perror("dup2 @ child1 @ ft_get_cmd_path");
-		exit(errno);
-	}
-	close(fd[1]);
+	close(fd[READ_END]);
+	if (dup2(fd[WRITE_END], STDOUT_FILENO) < 0)
+		error("dup2 @ child1 @ ft_get_cmd_path");
 	if (execve ("/usr/bin/which", cmd_args, envp) < 0)
-	{
-		perror("execve @ child1 @ ft_get_cmd_path");
-		exit(errno);
-	}
+		error("execve @ child1 @ ft_get_cmd_path");
 }
 
 static void	parent(int *fd, char *cmd_path)
 {
 	int	n_read;
 
-	close(fd[1]);
-	n_read = read(fd[0], cmd_path, 100);
-	close(fd[0]);
+	close(fd[WRITE_END]);
+	n_read = read(fd[READ_END], cmd_path, 100);
 	if (n_read < 0)
-	{
-		perror("read @ child2 @ ft_get_cmd_path");
-		exit(errno);
-	}
+		error("read @ child2 @ ft_get_cmd_path");
 	else
 	{
 		if (n_read == 0)
