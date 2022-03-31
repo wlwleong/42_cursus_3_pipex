@@ -31,6 +31,7 @@ typedef struct s_struct
 	char	**envp;
 }		t_cmd;
 
+void	ft_putstr_fd(char *s, int fd);
 char	**ft_split(char const *s, char c);
 int		ft_get_infile(char *file_path);
 int		ft_get_outfile(char *file_path);

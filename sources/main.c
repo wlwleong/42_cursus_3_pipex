@@ -36,7 +36,7 @@ int	main(int argc, char *argv[], char **envp)
 		child(file_fd[INFILE], pipe_fd, cmds, argc);
 	else
 	{
-		waitpid(child_pid, NULL, 0);
+		waitpid(child_pid, NULL, 1);
 		parent(file_fd[OUTFILE], pipe_fd, cmds, argc);
 	}
 	return (0);
@@ -51,9 +51,10 @@ static void	child(int infile_fd, int *pipe_fd, t_cmd *commands, int argc)
 	close(pipe_fd[READ_END]);
 	if (execve(commands[0].path, commands[0].arg, commands[0].envp) < 0)
 	{
-		perror(commands[0].arg[0]);
+		ft_putstr_fd(commands[0].arg[0], 2);
+		ft_putstr_fd(": command not found\n", 2);
 		ft_free_command(commands, argc);
-		exit(errno);
+		exit(127);
 	}
 }
 
@@ -66,8 +67,9 @@ static void	parent(int outfile_fd, int *pipe_fd, t_cmd *commands, int argc)
 	close(pipe_fd[WRITE_END]);
 	if (execve(commands[1].path, commands[1].arg, commands[1].envp) < 0)
 	{
-		perror(commands[1].arg[0]);
+		ft_putstr_fd(commands[1].arg[0], 2);
+		ft_putstr_fd(": command not found\n", 2);
 		ft_free_command(commands, argc);
-		exit(errno);
+		exit(127);
 	}
 }

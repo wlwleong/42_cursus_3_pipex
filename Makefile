@@ -11,7 +11,7 @@
 # **************************************************************************** #
 
 SOURCES_FILES	=	ft_split.c ft_get_infile.c ft_get_outfile.c ft_get_cmd_path.c
-SOURCES_FILES	+=	ft_fill_cmd.c ft_free_command.c error.c main.c
+SOURCES_FILES	+=	ft_fill_cmd.c ft_free_command.c error.c ft_putstr_fd.c main.c
 
 SOURCES_DIR		=	sources
 HEADER_DIR		=	includes
