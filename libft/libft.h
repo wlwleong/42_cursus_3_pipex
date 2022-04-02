@@ -1,25 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putstr_fd.c                                     :+:      :+:    :+:   */
+/*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: wlow <wlow@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/08/01 21:28:25 by wlow              #+#    #+#             */
-/*   Updated: 2021/08/04 00:04:44 by wlow             ###   ########.fr       */
+/*   Created: 2021/07/14 21:10:30 by wlow              #+#    #+#             */
+/*   Updated: 2021/08/05 09:24:23 by wlow             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/pipex_bonus.h"
+#ifndef LIBFT_H
+# define LIBFT_H
 
-void	ft_putstr_fd(char *s, int fd)
+# include <stdlib.h>
+# include <unistd.h>
+
+typedef struct s_list
 {
-	unsigned int	index;
+	void			*content;
+	struct s_list	*next;
+}				t_list;
 
-	if (s)
-	{
-		index = 0;
-		while (s[index] != '\0')
-			write(fd, &s[index++], 1);
-	}
-}
+
+char	**ft_split(char const *s, char c);
+void	ft_putstr_fd(char *s, int fd);
+
+#endif
