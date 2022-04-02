@@ -59,7 +59,7 @@ $(BONUS_NAME):		$(LIBFT) $(OBJ_DIR) $(BONUS_OBJECTS) $(BONUS_HEADER)
 					@echo "\033[32mPipex Bonus Compiled! ᕦ(\033[31m♥\033[32m_\033[31m♥\033[32m)ᕤ\n"
 
 $(LIBFT):
-					@$(MAKE) -C $(LIBFT_PATH)
+					@$(MAKE) --no-print-directory -C $(LIBFT_PATH)
 
 $(OBJ_DIR):
 					@mkdir -p $(OBJ_DIR)
@@ -68,11 +68,11 @@ $(BONUS_OBJ_DIR):
 					@mkdir -p $(OBJ_DIR)
 
 clean:
-					@$(MAKE) -C $(LIBFT_PATH) clean
+					@$(MAKE) --no-print-directory -C $(LIBFT_PATH) clean
 					@$(RM) $(OBJ_DIR)
 
 fclean: 			clean
-					@$(MAKE) -C $(LIBFT_PATH) fclean
+					@$(MAKE) --no-print-directory -C $(LIBFT_PATH) fclean
 					@$(RM) $(NAME) $(BONUS_NAME)
 					@echo "\n\033[31mDeleting EVERYTHING! ⌐(ಠ۾ಠ)¬\n"
 
