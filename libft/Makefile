@@ -10,23 +10,22 @@
 #                                                                              #
 # **************************************************************************** #
 
-NAME	= libft.a
-CC		= gcc
-CFLAGS	= -Wall -Wextra -Werror
-AR		= ar
-ARFLAGS = rcs
+NAME	=	libft.a
+CC		=	gcc
+CFLAGS	=	-Wall -Wextra -Werror
+AR		=	ar
+ARFLAGS =	rcs
+RM		=	rm -rf
 
-FILES	= ft_split.c ft_putstr_fd.c
+FILES	=	ft_split.c ft_putstr_fd.c
 
-HEADER	= libft.h
+HEADER	=	libft.h
 
-OBJ_DIR	= ../objects
-OBJECTS	= $(FILES:%.c=$(OBJ_DIR)/%.o)
+OBJ_DIR	=	../objects
+OBJECTS	=	$(FILES:%.c=$(OBJ_DIR)/%.o)
 
 $(OBJ_DIR)/%.o:		%.c $(HEADER)
 					@$(CC) $(CFLAGS) -c $< -o $@
-
-RM		= rm -rf
 
 all:	$(NAME)
 

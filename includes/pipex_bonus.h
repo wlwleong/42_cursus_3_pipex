@@ -13,6 +13,7 @@
 #ifndef PIPEX_BONUS_H
 # define PIPEX_BONUS_H
 
+# include "../libft/libft.h"
 # include <unistd.h>
 # include <stdlib.h>
 # include <stdio.h>
@@ -34,8 +35,6 @@ typedef struct s_struct
 }		t_cmd;
 
 int		pipex(t_cmd *commands);
-void	ft_putstr_fd(char *s, int fd);
-char	**ft_split(char const *s, char c);
 void	ft_check_infile(char *file_path);
 void	ft_check_outfile(char *file_path);
 void	ft_get_cmd_path(t_cmd *commands);

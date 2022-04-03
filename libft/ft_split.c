@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/pipex.h"
+#include "libft.h"
 
 static int	ft_get_n_str(char const *s, char c);
 static char	*ft_new_str(char const *s, int start, int end);

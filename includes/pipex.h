@@ -13,6 +13,7 @@
 #ifndef PIPEX_H
 # define PIPEX_H
 
+# include "../libft/libft.h"
 # include <unistd.h>
 # include <stdlib.h>
 # include <stdio.h>
@@ -31,8 +32,6 @@ typedef struct s_struct
 	char	**envp;
 }		t_cmd;
 
-void	ft_putstr_fd(char *s, int fd);
-char	**ft_split(char const *s, char c);
 int		ft_get_infile(char *file_path);
 int		ft_get_outfile(char *file_path);
 void	ft_get_cmd_path(t_cmd *commands);
