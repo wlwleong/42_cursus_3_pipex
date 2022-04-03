@@ -13,22 +13,32 @@
 NAME	= libft.a
 CC		= gcc
 CFLAGS	= -Wall -Wextra -Werror
+AR		= ar
+ARFLAGS = rcs
 
 FILES	= ft_split.c ft_putstr_fd.c
 
-OBJ		= $(FILES:.c=.o)
+HEADER	= libft.h
+
+OBJ_DIR	= ../objects
+OBJECTS	= $(FILES:%.c=$(OBJ_DIR)/%.o)
+
+$(OBJ_DIR)/%.o:		%.c $(HEADER)
+					@$(CC) $(CFLAGS) -c $< -o $@
 
 RM		= rm -rf
 
 all:	$(NAME)
 
-$(NAME):
-		@$(CC) $(CFLAGS) -c $(FILES)
-		@ar rc $(NAME) $(OBJ)
-		@ranlib $(NAME)
+$(NAME):			$(OBJ_DIR) $(OBJECTS) $(HEADER)
+					@$(AR) $(ARFLAGS) $(NAME) $(OBJECTS)
+					@echo "\033[33m----Compiling libft----"
+
+$(OBJ_DIR):
+		@mkdir -p $(OBJ_DIR)
 
 clean:
-		@$(RM) $(OBJ)
+		@$(RM) $(OBJ_DIR)
 
 fclean:	clean
 		@$(RM) $(NAME)
