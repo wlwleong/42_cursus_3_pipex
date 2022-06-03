@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../pipex.h"
+#include "../includes/pipex.h"
 
 #define	READ 0
 #define	WRITE 1
@@ -24,7 +24,7 @@ int	main(void)
 
 	data = 1;
 	i = 0;
-	while (i < 5)
+	while (i < 10)
 	{
 		if (pipe(pipe_fd) < 0)
 		{
